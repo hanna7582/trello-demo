@@ -1,28 +1,21 @@
 <template>
-  <div>
-    Login
+  <div class="login">
+    <h2>Log in to Trello</h2>
     <form @submit.prevent="onSubmit">
       <div>
-        <label for="email">email</label>
-        <input type="text" name="email" 
-          v-model="email" 
-          placeholder="test@test.com"
-          autofocus
-        >
+        <label for="email">Email</label>
+        <input class="form-control" type="text" name="email" 
+          v-model="email" autofocus />
       </div>
       <div>
-        <label for="password">password</label>
-        <input type="text" name="password" 
-          v-model="password" 
-        >
+        <label for="password">Passwrod</label>
+        <input class="form-control" type="password" 
+          v-model="password" />
       </div>
-      <button 
-        type="submit"
-        :class="{'btn-success':!invalidForm}"
-        :disabled="invalidForm"
-      >login</button>
+      <button  class="btn" :class="{'btn-success': !invalidForm}" type="submit" 
+        :disabled="invalidForm">Log In</button>
     </form>
-    <div v-if="error">{{error}}</div>
+    <p class="error" v-if="error">{{error}}</p>
   </div>
 </template>
 
@@ -62,5 +55,11 @@ export default {
 </script>
 
 <style>
-
+.login {
+  width: 400px;
+  margin: 0 auto; 
+}
+.error {
+  color: #f00;
+}
 </style>
