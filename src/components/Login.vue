@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import {auth, setAuthInHeader} from '../api'
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -36,11 +36,12 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'FETCH_AUTH',
+    ]),
     onSubmit() {
-      auth.login(this.email, this.password)
-      .then( res => {
-        localStorage.setItem('token', res.accessToken)
-        setAuthInHeader(res.accessToken)
+      this.FETCH_AUTH({email:this.email, password: this.password})
+      .then( () => {
         this.$router.push(this.rPath)
       })
       .catch( e => {

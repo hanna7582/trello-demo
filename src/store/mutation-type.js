@@ -1,0 +1,7 @@
+export default {
+  SET_TOKEN: 'SET_TOKEN',
+  LOGIN : 'LOGIN',
+  LOGOUT : 'LOGOUT',
+  SET_IS_ADD_BOARD : 'SET_IS_ADD_BOARD',
+  SET_BOARDS : 'SET_BOARDS',
+}

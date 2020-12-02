@@ -10,60 +10,52 @@
         </router-link>
       </div>
       <div class="board-item board-item-new">
-        <a href="" class="new-board-btn" @click.prevent="addBoard">
+        <a href="" class="new-board-btn" @click.prevent="SET_IS_ADD_BOARD(true)">
           Create new board
         </a>
       </div>
     </div>
-    <AddBoard v-if="isAddBoard" @close="isAddBoard=false" @submit="onAddBoard"/>
+    <AddBoard v-if="isAddBoard"/>
   </div>
 </template>
 
 <script>
-import {board} from '../api'
 import AddBoard from "@/components/AddBoard";
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   components: {
     AddBoard
   },
   data() {
     return {
-      loading: true,
-      boards:'',
-      error:'',
-      isAddBoard:false
+      error:'',      
     }
+  },
+  computed: {
+    ...mapState([
+      'isAddBoard',
+      'boards'
+    ])
   },
   created () {
-    this.fetchData();
+    this.fetchBoard();
   },
-  methods: {
-    fetchData() {
-      this.loading=true 
-
-      board.fetch()
-      .then(res => {
-        this.boards=res.list
-      })
-      .finally(() => {
-        this.loading=false
-      })
-    },
-    addBoard(){
-      this.isAddBoard=true;
-    },
-    onAddBoard(title){
-      board.create(title)
-      .then(res => {
-        this.fetchData()
-      })
-    }
-  },
-  updated(){
+  updated () {
     this.$refs.boardItem.forEach(el => {
       el.style.backgroundColor = el.dataset.bgcolor
     })
-  }
+  },
+  methods: {
+    ...mapMutations([
+      'SET_IS_ADD_BOARD',
+    ]),
+    ...mapActions([
+      'FETCH_BOARDS',
+    ]),
+    fetchBoard() {
+      this.FETCH_BOARDS()
+    },
+  },
 }
 </script>
 
